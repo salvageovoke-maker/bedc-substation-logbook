@@ -4,8 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#eef2f6">
-<meta name="description" content="BEDC 33kV/11kV injection substation feeder operations logbook">
+<meta name="theme-color" content="#064f4c">
 <link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
 <title>BEDC Injection Substation Logbook</title>
 <style>
@@ -56,6 +57,53 @@ button:disabled{opacity:.4;cursor:not-allowed}.btn-light{background:#fff;color:#
 .note{font-size:11px;color:#6d7d89;margin-top:12px}
 @media(max-width:850px){.grid{grid-template-columns:1fr 1fr}.report-grid{grid-template-columns:1fr}}
 @media(max-width:560px){main{padding:0 11px 30px}.grid{grid-template-columns:1fr}.card{padding:15px}.section{padding:14px}.log-item{grid-template-columns:1fr auto;gap:5px}.log-time{grid-column:1/-1}.log-message{grid-column:1}.log-actions{grid-column:2;grid-row:2}.timer-card{gap:13px}}
+
+/* Main menu */
+.menu-tabs{display:flex;gap:8px;margin:18px 0 16px;padding:5px;background:#dfe7ee;border-radius:12px;width:max-content;max-width:100%}
+.menu-tab{min-width:112px;background:transparent;color:#334b5e;border:0;border-radius:8px;padding:10px 20px}
+.menu-tab.active{background:#214f70;color:#fff;box-shadow:0 2px 7px #142b3d25}
+.page-panel[hidden]{display:none!important}
+.load-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 0 12px}
+.load-toolbar h2{margin:0;font-size:18px}
+.load-scroll{height:min(68vh,680px);min-height:360px;overflow:auto;border:1px solid #aeb9c3;border-radius:8px;background:#fff;overscroll-behavior:contain}
+.load-table{border-collapse:separate;border-spacing:0;table-layout:fixed;min-width:1180px;width:100%;font-size:13px}
+.load-table th,.load-table td{border-right:1px solid #8c969e;border-bottom:1px solid #8c969e;padding:0;text-align:center}
+.load-table thead th{position:sticky;top:0;z-index:3;height:50px;background:#24577c;color:#fff;font-weight:800;line-height:1.2;padding:6px 5px}
+.load-table thead th:first-child{left:0;z-index:5;width:90px;min-width:90px}
+.load-table tbody th{position:sticky;left:0;z-index:2;width:90px;min-width:90px;background:#fff;color:#263746;font-weight:500;text-align:left;padding:5px 8px}
+.load-table td{height:27px}
+.load-table td input{display:block;width:100%;height:27px;border:0;border-radius:0;text-align:center;padding:3px 5px;background:transparent;color:#17212b;font-family:inherit;font-size:13px;outline-offset:-2px}
+.load-table td input:focus{outline:2px solid #246b8e;background:#fff}
+.load-table .energy-in{background:#f2cccc}.load-table .fed{background:#d9ead5}.load-table .orho{background:#f8e5d1}
+.load-table .time-head{background:#24577c}
+.load-help{font-size:12px;color:#607181;margin:0 0 12px}
+.daily-report-tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:14px}
+.daily-report-box{display:none;margin-top:14px;padding:16px;border:1px solid #cbd6df;border-radius:11px;background:#f8fafc}
+.daily-report-box.show{display:block}
+.daily-report-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.daily-report-head h3{margin:0;font-size:15px}
+.daily-report-content{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;font:13px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace;color:#172b3a}
+@media(max-width:560px){.menu-tabs{width:100%}.menu-tab{flex:1}.load-scroll{height:68vh;min-height:320px}.load-table{min-width:1100px}}
+
+/* Consumption sheet */
+.consumption-scroll{height:min(72vh,720px);min-height:380px;overflow:auto;border:1px solid #aeb9c3;border-radius:8px;background:#fff;overscroll-behavior:contain}
+.consumption-table{border-collapse:separate;border-spacing:0;table-layout:fixed;min-width:833px;width:100%;font-size:13px}
+.consumption-table th,.consumption-table td{border-right:1px solid #8c969e;border-bottom:1px solid #8c969e;padding:0;text-align:center;height:33px;background:#fff}
+.consumption-table .letters th{position:sticky;top:0;z-index:5;height:28px;background:#edf3f8;color:#526577;font-weight:700}
+.consumption-table .letters th:first-child{left:0;z-index:8;width:48px;min-width:48px}
+.consumption-table .letters th:nth-child(2){position:sticky;left:48px;z-index:9;background:#edf3f8;width:185px;min-width:185px}
+.consumption-table .rownum{position:sticky;left:0;z-index:3;width:48px;min-width:48px;background:#edf3f8;color:#526577;font-weight:600}
+.consumption-table .sheet-head th{position:sticky;top:28px;z-index:4;background:#fff;color:#111;font-weight:800;line-height:1.2;padding:5px;white-space:normal}
+.consumption-table .sheet-head .rownum{left:0;z-index:7;background:#edf3f8}
+.consumption-table .col-a{position:sticky;left:48px;z-index:2;width:185px;min-width:185px;text-align:right;padding:5px 8px;background:#fff;font-weight:600}
+.consumption-table .sheet-head .col-a{z-index:6}
+.consumption-table .data-cell{width:200px;min-width:200px}
+.consumption-table input{width:100%;height:32px;border:0;border-radius:0;text-align:center;padding:4px 6px;background:transparent;color:#17212b;font:inherit;outline-offset:-2px}
+.consumption-table input:focus{outline:2px solid #246b8e;background:#fff}
+.consumption-table .calc-cell{font-weight:700;background:#f3f6f8;font-variant-numeric:tabular-nums}
+.consumption-table .energy-cell{background:#f8fafc}
+@media(max-width:560px){.consumption-scroll{height:70vh;min-height:340px}.consumption-table{min-width:833px}.consumption-table .col-a{width:185px;min-width:185px}.consumption-table .data-cell{width:200px;min-width:200px}}
+
 </style>
 </head>
 <body>
@@ -65,6 +113,13 @@ button:disabled{opacity:.4;cursor:not-allowed}.btn-light{background:#fff;color:#
   <p>33kV / 11kV feeder control, supply tracking and availability records</p>
 </header>
 <main>
+
+  <div class="menu-tabs" role="tablist" aria-label="Logbook sections">
+    <button class="menu-tab active" id="logTab" role="tab" aria-selected="true" aria-controls="logPage">Log</button>
+    <button class="menu-tab" id="loadTab" role="tab" aria-selected="false" aria-controls="loadPage">Load</button>
+    <button class="menu-tab" id="consumptionTab" role="tab" aria-selected="false" aria-controls="consumptionPage">Consumption</button>
+  </div>
+  <div id="logPage" class="page-panel">
   <div class="topbar">
     <div><div class="session" id="sessionInfo">Monitoring session</div><div class="muted" id="clock"></div><button class="btn-light" id="editSessionBtn" style="margin-top:7px;padding:7px 10px">Edit session start time</button></div>
     <div class="actions">
@@ -86,11 +141,56 @@ button:disabled{opacity:.4;cursor:not-allowed}.btn-light{background:#fff;color:#
   <section class="section">
     <div class="section-head">
       <div><h2>Chronological operations log</h2><div class="muted">All events are stored on this device. Edit a timestamp to recalculate durations and reorder the log.</div></div>
-      <div class="log-tools"><button class="btn-light" id="manualBtn2">＋ Add record</button></div>
+      <div class="log-tools"><button class="btn-light" id="exportLogCsvBtn">Export CSV</button><button class="btn-light" id="manualBtn2">＋ Add record</button></div>
     </div>
     <div class="log-list" id="logList"></div>
   </section>
   <p class="note">Times use your device's local time. Set your device to Nigeria time (WAT, UTC+1) for BEDC operating records. Data is saved in this browser on this device. Clearing browser site data or changing devices can remove locally stored records.</p>
+  </div>
+  <section id="loadPage" class="page-panel section" hidden>
+    <div class="load-toolbar">
+      <div><h2>Feeder Load Record</h2><div class="muted">Hourly incomer energy, feeder phase currents and feeder energy readings.</div></div>
+      <button class="btn-danger" id="clearLoadBtn">Clear load data</button>
+    </div>
+    <p class="load-help">Enter readings in the cells. Changes are saved automatically on this device and remain available until you clear them.</p>
+    <div class="load-scroll" tabindex="0" aria-label="Scrollable feeder load table">
+      <table class="load-table" aria-label="Hourly feeder load readings">
+        <thead><tr>
+          <th class="time-head">Time</th>
+          <th>Incomer Energy<br>(MWh)</th>
+          <th>Fed. Polytechnic<br>R(A)</th><th>Fed. Polytechnic<br>Y(A)</th><th>Fed. Polytechnic<br>B(A)</th><th>Fed. Polytechnic<br>Energy (MWh)</th>
+          <th>Orhoerha/Emonu<br>R(A)</th><th>Orhoerha/Emonu<br>Y(A)</th><th>Orhoerha/Emonu<br>B(A)</th><th>Orhoerha/Emonu<br>Energy (MWh)</th>
+        </tr></thead>
+        <tbody id="loadRows"></tbody>
+      </table>
+    </div>
+    <div class="muted" id="loadSaveStatus" style="margin-top:9px">All changes are saved automatically.</div>
+    <div class="daily-report-tools"><button class="btn-primary" id="dailyReportBtn">Daily Report</button></div>
+    <div class="daily-report-box" id="dailyReportBox" aria-live="polite">
+      <div class="daily-report-head"><h3>Orogun ISS Daily Availability Report</h3><button class="btn-light" id="copyDailyReportBtn">Copy report</button></div>
+      <pre class="daily-report-content" id="dailyReportContent"></pre>
+    </div>
+  </section>
+  <section id="consumptionPage" class="page-panel section" hidden>
+    <div class="load-toolbar">
+      <div><h2>Monthly Feeder Availability and Consumption</h2><div class="muted">Editable daily availability durations and monthly energy readings.</div></div>
+      <button class="btn-danger" id="clearConsumptionBtn">Clear consumption data</button>
+    </div>
+    <p class="load-help">Enter durations as hours:minutes:seconds (HH:MM:SS). Blank duration cells are excluded from averages; zero durations are included. Calculated rows update automatically and all entries are saved on this device.</p>
+    <div class="consumption-scroll" tabindex="0" aria-label="Scrollable monthly consumption spreadsheet">
+      <table class="consumption-table" aria-label="Monthly feeder availability and consumption">
+        <colgroup><col style="width:48px"><col style="width:185px"><col style="width:200px"><col style="width:200px"><col style="width:200px"></colgroup>
+        <thead id="consumptionHead"></thead><tbody id="consumptionRows"></tbody>
+      </table>
+    </div>
+    <div class="muted" id="consumptionSaveStatus" style="margin-top:9px">All changes are saved automatically.</div>
+    <div class="daily-report-tools"><button class="btn-primary" id="monthlyReportBtn">Monthly Report</button></div>
+    <div class="daily-report-box" id="monthlyReportBox" aria-live="polite">
+      <div class="daily-report-head"><h3>Orogun ISS Monthly Availability Report</h3><button class="btn-light" id="copyMonthlyReportBtn">Copy report</button></div>
+      <pre class="daily-report-content" id="monthlyReportContent"></pre>
+    </div>
+  </section>
+
 </main>
 
 <div class="modal-backdrop" id="modal">
@@ -140,6 +240,22 @@ function fmtDuration(ms){ms=Math.max(0,Math.floor(ms/60000)*60000);const h=Math.
 function dateTime(ts){const d=new Date(ts);return d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})+' '+d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',hour12:false});}
 function inputDate(ts){const d=new Date(ts);const pad=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;}
 function sorted(){return [...data.events].sort((a,b)=>a.time-b.time||a.order-b.order);}
+function exportOperationsLogCsv(){
+ const rows=[['Date and Time','Feeder','Action','Event Source']];
+ for(const e of sorted()){
+  const feeder=FEEDERS.find(f=>f.id===e.feeder);
+  const source=e.source==='automatic-exhaustion'?'Supply allowance exhausted':e.source==='automatic-33kv-trip'?'Automatic 33kV trip':e.source==='manual'?'Manual entry':'Control panel';
+  rows.push([dateTime(e.time),feeder?feeder.name:e.feeder,e.action,source]);
+ }
+ const csv=rows.map(row=>row.map(value=>'"'+String(value??'').replace(/"/g,'""')+'"').join(',')).join('\r\n');
+ const blob=new Blob(['\ufeff',csv],{type:'text/csv;charset=utf-8;'});
+ const url=URL.createObjectURL(blob);
+ const link=document.createElement('a');
+ const stamp=new Date().toISOString().slice(0,10);
+ link.href=url;link.download='BEDC_Operations_Log_'+stamp+'.csv';
+ document.body.appendChild(link);link.click();link.remove();
+ setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
 function replay(until=now()){
  const states={'33':false,'11a':false,'11b':false}, used={'11a':0,'11b':0}, onSince={'33':null,'11a':null,'11b':null};
  let cursor=data.start;
@@ -309,6 +425,208 @@ window.addEventListener('error',e=>{
   msg.textContent='App error: '+(e.message||'An unexpected error occurred')+'. Reload the file in Chrome. ';
   document.querySelector('main').prepend(msg);
 });
+// Load page: independent persistent hourly readings (01:00 through 00:00).
+const LOAD_KEY='bedc_injection_load_records_v1';
+const LOAD_FIELDS=['incomer','fedR','fedY','fedB','fedEnergy','orhoR','orhoY','orhoB','orhoEnergy'];
+let loadData={};
+function loadReadings(){try{const v=JSON.parse(localStorage.getItem(LOAD_KEY)||'{}');return v&&typeof v==='object'&&!Array.isArray(v)?v:{};}catch(e){return {};}}
+function saveReadings(){try{localStorage.setItem(LOAD_KEY,JSON.stringify(loadData));$('loadSaveStatus').textContent='Saved automatically on this device.';}catch(e){$('loadSaveStatus').textContent='Could not save. Check available browser storage.';}}
+function renderLoadRows(){
+ const times=Array.from({length:24},(_,i)=>String((i+1)%24).padStart(2,'0')+':00');
+ $('loadRows').innerHTML=times.map((time,i)=>{const key=String(i).padStart(2,'0');const vals=loadData[key]||{};return `<tr><th scope="row">${time}</th>${LOAD_FIELDS.map((field,j)=>{const cls=j===0?'energy-in':j<=4?'fed':'orho';const label=['Incomer Energy','Fed Polytechnic R current','Fed Polytechnic Y current','Fed Polytechnic B current','Fed Polytechnic Energy','Orhoerha Emonu R current','Orhoerha Emonu Y current','Orhoerha Emonu B current','Orhoerha Emonu Energy'][j];return `<td class="${cls}"><input type="number" inputmode="decimal" step="any" data-load-time="${key}" data-load-field="${field}" aria-label="${time} ${label}" value="${vals[field]??''}"></td>`;}).join('')}</tr>`;}).join('');
+ document.querySelectorAll('[data-load-field]').forEach(input=>input.addEventListener('input',()=>{const t=input.dataset.loadTime,f=input.dataset.loadField;if(!loadData[t])loadData[t]={};if(input.value==='')delete loadData[t][f];else loadData[t][f]=input.value;if(Object.keys(loadData[t]).length===0)delete loadData[t];saveReadings();if($('dailyReportBox').classList.contains('show'))renderDailyReport();}));
+}
+function numericReading(row,field){const value=Number(row?.[field]??0);return Number.isFinite(value)&&value>0?value:0;}
+function nilIfZero(value,formatter=v=>String(v)){return value===0?'Nil':formatter(value);}
+function previousDayDate(){const d=new Date();d.setDate(d.getDate()-1);return `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`;}
+function feederLoadSummary(prefix,fields,energyField,onTime){
+ const rows=Array.from({length:24},(_,i)=>({time:String((i+1)%24).padStart(2,'0'),values:loadData[String(i).padStart(2,'0')]||{}}));
+ let maxLoad=0,maxLoadTime='';
+ let totalLoad=0;
+ for(const row of rows){
+   const currents=fields.map(field=>numericReading(row.values,field));
+   const hourlyMax=Math.max(...currents);
+   totalLoad+=hourlyMax;
+   if(hourlyMax>=maxLoad&&hourlyMax>0){maxLoad=hourlyMax;maxLoadTime=row.time+':00';}
+ }
+ const lastEnergyRow=[...rows].reverse().find(row=>row.values[energyField]!==undefined&&row.values[energyField]!==null&&String(row.values[energyField]).trim()!=='');
+ const lastEnergy=lastEnergyRow?numericReading(lastEnergyRow.values,energyField):0;
+ const energyText=nilIfZero(lastEnergy,v=>String(lastEnergyRow.values[energyField]));
+ const maxLoadText=nilIfZero(maxLoad,v=>String(v));
+ const maxTimeText=maxLoad>0?maxLoadTime:'Nil';
+ const totalText=nilIfZero(totalLoad,v=>String(v));
+ const mwText=totalLoad===0?'Nil':(totalLoad/60).toFixed(1);
+ return `*${prefix} Feeder*\nAvailability = ${onTime===0?'Nil':fmtDuration(onTime)}\nEnergy = ${energyText}MWh\nMax Load @${maxTimeText}hrs = ${maxLoadText}A\nTotal Load = ${totalText}A\nMegawatts = ${mwText}MW`;
+}
+function renderDailyReport(){
+ const r=currentState();
+ const fed=feederLoadSummary('Fed. Polytechnic',['fedR','fedY','fedB'],'fedEnergy',r.totals['11b'].on);
+ const orho=feederLoadSummary('Orhoerha/Emonu',['orhoR','orhoY','orhoB'],'orhoEnergy',r.totals['11a'].on);
+ const incomerRows=Array.from({length:24},(_,i)=>loadData[String(i).padStart(2,'0')]||{});
+ const lastIncomer=[...incomerRows].reverse().find(row=>row.incomer!==undefined&&row.incomer!==null&&String(row.incomer).trim()!=='');
+ const incomerEnergy=lastIncomer?numericReading(lastIncomer,'incomer'):0;
+ const incomerText=nilIfZero(incomerEnergy,()=>String(lastIncomer.incomer));
+ const abrakaOn=r.totals['33'].on;
+ const report=`*Orogun ISS Daily Availability Report on*\n*${previousDayDate()}*\n\n${fed}\n\n${orho}\n\n*Abraka 33kv Feeder*\nAvailability = ${abrakaOn===0?'Nil':fmtDuration(abrakaOn)}\nIncomer Energy = ${incomerText}MWh`;
+ $('dailyReportContent').textContent=report;
+ $('dailyReportBox').classList.add('show');
+}
+async function copyDailyReport(){
+ const text=$('dailyReportContent').textContent;
+ const button=$('copyDailyReportBtn');
+ let copied=false;
+ // Try the modern clipboard API first. Some Android browsers expose it but
+ // reject the write, so continue to the selection-based fallback if it fails.
+ if(navigator.clipboard&&typeof navigator.clipboard.writeText==='function'){
+  try{await navigator.clipboard.writeText(text);copied=true;}catch(e){}
+ }
+ if(!copied){
+  const area=document.createElement('textarea');
+  area.value=text;area.setAttribute('readonly','');
+  area.style.position='fixed';area.style.top='0';area.style.left='0';
+  area.style.width='2px';area.style.height='2px';area.style.padding='0';
+  area.style.border='0';area.style.outline='0';area.style.boxShadow='none';
+  area.style.background='transparent';area.style.fontSize='16px';area.style.opacity='0.01';
+  document.body.appendChild(area);
+  try{
+   area.focus({preventScroll:true});area.select();area.setSelectionRange(0,area.value.length);
+   copied=document.execCommand('copy');
+  }catch(e){copied=false;}
+  area.remove();
+ }
+ if(copied){
+  const oldText=button.textContent;button.textContent='Copied';
+  setTimeout(()=>button.textContent=oldText,1600);
+ }else{
+  const report=$('dailyReportContent');
+  const selection=window.getSelection();const range=document.createRange();
+  range.selectNodeContents(report);selection.removeAllRanges();selection.addRange(range);
+  alert('Automatic copying is unavailable in this browser. The report text is selected. Tap Copy from the text selection menu.');
+ }
+}
+$('exportLogCsvBtn').onclick=exportOperationsLogCsv;
+$('dailyReportBtn').onclick=renderDailyReport;
+$('copyDailyReportBtn').onclick=copyDailyReport;
+function showPage(which){const pages=['log','load','consumption'];for(const name of pages){const active=name===which;$(name+'Page').hidden=!active;$(name+'Tab').classList.toggle('active',active);$(name+'Tab').setAttribute('aria-selected',String(active));}}
+$('logTab').onclick=()=>showPage('log');$('loadTab').onclick=()=>showPage('load');$('consumptionTab').onclick=()=>showPage('consumption');
+$('clearLoadBtn').onclick=()=>{if(!confirm('Clear all hourly feeder load readings? This cannot be undone.'))return;loadData={};saveReadings();renderLoadRows();};
+loadData=loadReadings();renderLoadRows();
+
+// Consumption sheet: persistent editable daily durations and monthly energy values.
+const CONSUMPTION_KEY='bedc_injection_consumption_records_v1';
+const SAMPLE_CONSUMPTION={
+ durations:[
+ ['11:00:00','0:00:00','0:00:00'],['12:21:00','11:23:00','7:10:00'],['7:30:00','6:15:00','2:00:00'],['0:00:00','0:00:00','0:00:00'],['0:00:00','0:00:00','0:00:00'],['5:52:00','0:00:00','0:00:00'],['0:00:00','0:00:00','0:00:00'],['3:00:00','0:00:00','0:00:00'],['0:00:00','0:00:00','0:00:00'],['4:00:00','0:00:00','0:00:00'],['0:00:00','0:00:00','0:00:00'],['0:00:00','0:00:00','0:00:00'],['6:18:00','3:10:00','0:00:00'],['16:00:00','13:35:00','7:09:00'],['13:00:00','10:00:00','6:00:00'],['8:00:00','7:30:00','5:00:00'],['7:00:00','6:00:00','4:00:00'],['6:00:00','5:45:00','4:00:00'],['0:00:00','0:00:00','0:00:00'],['0:00:00','0:00:00','0:00:00'],['0:00:00','0:00:00','0:00:00'],['0:00:00','0:00:00','0:00:00'],['0:00:00','0:00:00','0:00:00'],['9:50:00','9:50:00','5:00:00'],['15:01:00','12:16:00','2:00:00'],['10:44:00','9:09:00','3:44:00'],['20:43:00','15:35:00','3:04:00'],['11:43:00','8:49:00','11:43:00'],['23:41:00','15:54:00','4:47:00'],['5:16:00','5:05:00','3:34:00'],['3:27:00','3:27:00','3:27:00']
+ ],previous:[96,54,42],present:[130,68,63]
+};
+let consumptionData;
+function cloneSample(){return JSON.parse(JSON.stringify(SAMPLE_CONSUMPTION));}
+function loadConsumption(){try{const raw=localStorage.getItem(CONSUMPTION_KEY);if(raw){const parsed=JSON.parse(raw);if(parsed&&Array.isArray(parsed.durations)&&parsed.durations.length===31)return parsed;}}catch(e){}return cloneSample();}
+function saveConsumption(){try{localStorage.setItem(CONSUMPTION_KEY,JSON.stringify(consumptionData));$('consumptionSaveStatus').textContent='Saved automatically on this device.';}catch(e){$('consumptionSaveStatus').textContent='Could not save. Check available browser storage.';}}
+function durationSeconds(value){if(value===null||value===undefined||String(value).trim()==='')return null;const match=String(value).trim().match(/^(\d+):(\d{1,2}):(\d{1,2})$/);if(!match)return null;const h=Number(match[1]),m=Number(match[2]),sec=Number(match[3]);if(m>59||sec>59)return null;return h*3600+m*60+sec;}
+function durationText(total){const rounded=Math.round(total);const h=Math.floor(rounded/3600),m=Math.floor(rounded%3600/60),sec=rounded%60;return `${h}:${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;}
+function renderConsumption(){
+ const headers=['S/N','Abraka 33kv feeder Availability','Fed. Polytechnic feeder Availability','Orhoerha/Emonu feeder Availability'];
+ $('consumptionHead').innerHTML=`<tr class="letters"><th></th><th>A</th><th>B</th><th>C</th><th>D</th></tr><tr class="sheet-head"><th class="rownum">1</th>${headers.map((h,i)=>`<th class="${i===0?'col-a':'data-cell'}">${h}</th>`).join('')}</tr>`;
+ const labels=Array.from({length:31},(_,i)=>String(i+1));
+ labels.push('Total Availability (Hrs)','Average Availability (Hrs)','Previous (MWh)','Present (MWh)','Consumption (MWh)');
+ const body=labels.map((label,row)=>{
+  const sheetRow=row+2;
+  if(row<31){return `<tr><th class="rownum">${sheetRow}</th><th class="col-a">${label}</th>${[0,1,2].map(col=>`<td class="data-cell"><input type="text" inputmode="text" autocomplete="off" spellcheck="false" aria-label="${String.fromCharCode(66+col)}${sheetRow}" data-cons-row="${row}" data-cons-col="${col}" value="${String(consumptionData.durations[row]?.[col]??'').replace(/&/g,'&amp;').replace(/"/g,'&quot;')}"></td>`).join('')}</tr>`;}
+  const calcRow=row-31;
+  if(calcRow===0||calcRow===1){return `<tr><th class="rownum">${sheetRow}</th><th class="col-a">${label}</th>${[0,1,2].map(col=>`<td class="calc-cell data-cell" id="consCalc${calcRow}_${col}"></td>`).join('')}</tr>`;}
+  const energyRow=calcRow-2;
+  const values=energyRow===0?consumptionData.previous:energyRow===1?consumptionData.present:null;
+  if(values){return `<tr><th class="rownum">${sheetRow}</th><th class="col-a">${label}</th>${values.map((v,col)=>`<td class="energy-cell data-cell"><input type="number" inputmode="decimal" step="any" aria-label="${String.fromCharCode(66+col)}${sheetRow}" data-energy-row="${energyRow}" data-energy-col="${col}" value="${v??''}"></td>`).join('')}</tr>`;}
+  return `<tr><th class="rownum">${sheetRow}</th><th class="col-a">${label}</th>${[0,1,2].map(col=>`<td class="calc-cell data-cell" id="consCalc2_${col}"></td>`).join('')}</tr>`;
+ }).join('');
+ $('consumptionRows').innerHTML=body;
+ document.querySelectorAll('[data-cons-row]').forEach(input=>input.addEventListener('change',()=>{const r=Number(input.dataset.consRow),c=Number(input.dataset.consCol),v=input.value.trim();if(v!==''&&durationSeconds(v)===null){input.setCustomValidity('Enter duration as HH:MM:SS, for example 7:30:00.');input.reportValidity();return;}input.setCustomValidity('');consumptionData.durations[r][c]=v;saveConsumption();updateConsumptionCalcs();}));
+ document.querySelectorAll('[data-energy-row]').forEach(input=>input.addEventListener('input',()=>{const r=Number(input.dataset.energyRow),c=Number(input.dataset.energyCol);consumptionData[r===0?'previous':'present'][c]=input.value===''?'':Number(input.value);saveConsumption();updateConsumptionCalcs();}));
+ updateConsumptionCalcs();
+}
+function updateConsumptionCalcs(){
+ for(let col=0;col<3;col++){
+  const vals=consumptionData.durations.map(row=>durationSeconds(row?.[col])).filter(v=>v!==null);
+  const total=vals.reduce((a,b)=>a+b,0);
+  const avg=vals.length?total/vals.length:null;
+  $('consCalc0_'+col).textContent=durationText(total);
+  $('consCalc1_'+col).textContent=avg===null?'Nil':durationText(avg);
+  const prev=Number(consumptionData.previous[col]||0),present=Number(consumptionData.present[col]||0);
+  $('consCalc2_'+col).textContent=consumptionData.previous[col]===''||consumptionData.present[col]===''?'Nil':String(present-prev);
+ }
+}
+consumptionData=loadConsumption();renderConsumption();
+function monthlyReportDuration(value){
+ if(value===null||value===undefined||String(value).trim()==='')return 'Nil';
+ const parts=String(value).trim().split(':');
+ if(parts.length!==3)return 'Nil';
+ return `${parts[0]}hrs ${parts[1]}mins`;
+}
+function monthlyReportEnergy(value){return value===null||value===undefined||String(value).trim()===''?'Nil':String(value);}
+function monthlyReportValues(col){
+ const durations=consumptionData.durations.map(row=>durationSeconds(row?.[col])).filter(v=>v!==null);
+ const total=durations.reduce((a,b)=>a+b,0);
+ const average=durations.length?durationText(total/durations.length):'';
+ const previous=consumptionData.previous[col];
+ const present=consumptionData.present[col];
+ const consumption=previous===''||previous===null||previous===undefined||present===''||present===null||present===undefined?'':String(Number(present)-Number(previous));
+ return {total:durationText(total),average,previous,present,consumption};
+}
+function renderMonthlyReport(){
+ const now=new Date();
+ const previousMonthDate=new Date(now.getFullYear(),now.getMonth()-1,1);
+ const month=previousMonthDate.toLocaleString('en-GB',{month:'long'}).toUpperCase();
+ const year=previousMonthDate.getFullYear();
+ const a=monthlyReportValues(0),b=monthlyReportValues(1),c=monthlyReportValues(2);
+ const report=`*OROGUN ISS MONTHLY AVAILABILITY REPORT FOR ${month} ${year}*
+
+*ABRAKA 33KV FEEDER*
+Total Availability = ${monthlyReportDuration(a.total)}
+Avg. Availability = ${monthlyReportDuration(a.average)}
+*Incomer Energy* 
+Previous = ${monthlyReportEnergy(a.previous)}MWh
+Present = ${monthlyReportEnergy(a.present)}MWh
+*Consumption* = ${monthlyReportEnergy(a.consumption)}MWh
+
+*FED. POLYTECHNIC FEEDER*
+Total Availability = ${monthlyReportDuration(b.total)}
+Avg. Availability = ${monthlyReportDuration(b.average)}
+*Energy*
+Previous = ${monthlyReportEnergy(b.previous)}MWh
+Present = ${monthlyReportEnergy(b.present)}MWh
+*Consumption* = ${monthlyReportEnergy(b.consumption)}MWh
+
+*ORHOERHA/EMONU FEEDER*
+Total Availability = ${monthlyReportDuration(c.total)}
+Avg. Availability = ${monthlyReportDuration(c.average)}
+*Energy*
+Previous = ${monthlyReportEnergy(c.previous)}MWh
+Present = ${monthlyReportEnergy(c.present)}MWh
+*Consumption* = ${monthlyReportEnergy(c.consumption)}MWh`;
+ $('monthlyReportContent').textContent=report;
+ $('monthlyReportBox').classList.add('show');
+}
+async function copyMonthlyReport(){
+ const text=$('monthlyReportContent').textContent;
+ const button=$('copyMonthlyReportBtn');let copied=false;
+ if(navigator.clipboard&&typeof navigator.clipboard.writeText==='function'){
+  try{await navigator.clipboard.writeText(text);copied=true;}catch(e){}
+ }
+ if(!copied){
+  const area=document.createElement('textarea');area.value=text;area.setAttribute('readonly','');
+  area.style.position='fixed';area.style.top='0';area.style.left='0';area.style.width='2px';area.style.height='2px';area.style.padding='0';area.style.border='0';area.style.opacity='0.01';area.style.fontSize='16px';
+  document.body.appendChild(area);
+  try{area.focus({preventScroll:true});area.select();area.setSelectionRange(0,area.value.length);copied=document.execCommand('copy');}catch(e){copied=false;}
+  area.remove();
+ }
+ if(copied){const old=button.textContent;button.textContent='Copied';setTimeout(()=>button.textContent=old,1600);}
+ else{const report=$('monthlyReportContent'),selection=window.getSelection(),range=document.createRange();range.selectNodeContents(report);selection.removeAllRanges();selection.addRange(range);alert('Automatic copying is unavailable in this browser. The report text is selected. Tap Copy from the text selection menu.');}
+}
+$('monthlyReportBtn').onclick=renderMonthlyReport;
+$('copyMonthlyReportBtn').onclick=copyMonthlyReport;
+$('clearConsumptionBtn').onclick=()=>{if(!confirm('Clear all consumption sheet entries? This cannot be undone.'))return;consumptionData={durations:Array.from({length:31},()=>['','','']),previous:['','',''],present:['','','']};saveConsumption();renderConsumption();$('monthlyReportBox').classList.remove('show');};
+
 try{
   data=load();normalizeTimeline();save();render();
   setInterval(()=>{try{normalizeTimeline();save();render();}catch(e){console.error(e);}},1000);
@@ -320,13 +638,16 @@ try{
 }
 })();
 </script>
+
 <script>
-if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./service-worker.js')
-      .catch(err => console.error('Service worker registration failed:', err));
+    navigator.serviceWorker.register('./service-worker.js').catch(error => {
+      console.warn('Offline support could not be registered:', error);
+    });
   });
 }
 </script>
+
 </body>
 </html>

@@ -2,13 +2,13 @@
   "id": "./",
   "name": "BEDC Substation Logbook",
   "short_name": "BEDC Logbook",
-  "description": "33kV/11kV feeder control, supply countdowns and operations logbook.",
+  "description": "Substation feeder operations, load readings, consumption and reports.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#eef2f6",
-  "theme_color": "#eef2f6",
+  "theme_color": "#064f4c",
   "icons": [
     {
       "src": "icon-192.png",
