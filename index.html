@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#eef2f6">
+<meta name="description" content="BEDC 33kV/11kV injection substation feeder operations logbook">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>BEDC Injection Substation Logbook</title>
+<style>
+:root{--bg:#eef2f6;--panel:#172b3a;--panel2:#20394b;--ink:#17212b;--muted:#637383;--line:#d8e0e8;--white:#fff;--red:#ef5350;--green:#37c987;--amber:#f0b64d;--blue:#5aa9e6}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+header{padding:22px max(18px,calc((100% - 1180px)/2));background:#fff;border-bottom:1px solid var(--line)}
+.eyebrow{font-size:11px;letter-spacing:.13em;font-weight:800;color:#587082;text-transform:uppercase}
+h1{font-size:clamp(22px,4vw,30px);margin:5px 0 3px}header p{margin:0;color:var(--muted)}
+main{max-width:1180px;margin:22px auto;padding:0 16px 44px}
+.topbar{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:16px}
+.session{color:#536474;font-size:13px}.actions{display:flex;gap:8px;flex-wrap:wrap}
+button{border:0;border-radius:9px;padding:10px 14px;font-weight:750;font-size:13px;cursor:pointer;transition:.15s}
+button:disabled{opacity:.4;cursor:not-allowed}.btn-light{background:#fff;color:#233746;border:1px solid var(--line)}.btn-primary{background:#246b8e;color:white}.btn-danger{background:#b93838;color:#fff}.btn-warn{background:#f7e9c8;color:#72520c}.btn-dark{background:#29485d;color:#fff}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.card{background:var(--panel);color:#f5f8fb;border-radius:15px;padding:17px;box-shadow:0 5px 18px #19324712}
+.card:nth-child(1){--panel:#173b5e;background:#173b5e}
+.card:nth-child(2){--panel:#174d49;background:#174d49}
+.card:nth-child(3){--panel:#44345f;background:#44345f}
+.card h2{font-size:16px;margin:0 0 4px}.sub{font-size:12px;color:#b7c7d3}
+.status{display:flex;align-items:center;gap:8px;margin:16px 0 12px;font-size:13px;color:#d7e2e9}
+.lamp{width:12px;height:12px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px #37c98720}.lamp.on{background:var(--red);box-shadow:0 0 0 4px #ef535020}
+.control{display:flex;gap:8px}.control button{flex:1}
+.btn-on{background:#e74b4b;color:white}.btn-off{background:#d9f4e8;color:#12633f}
+.metrics{display:flex;justify-content:space-between;gap:8px;margin-top:15px;padding-top:12px;border-top:1px solid #ffffff20}
+.metric small{display:block;color:#adc0ce;font-size:11px}.metric strong{font-size:15px}
+.timer-card{display:flex;align-items:center;gap:16px;margin-top:14px}
+.donut{width:104px;height:104px;flex:0 0 104px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--green) var(--progress,100%),#ffffff20 0);position:relative}
+.donut:before{content:"";position:absolute;inset:9px;background:var(--panel);border-radius:50%}
+.donut div{z-index:1;text-align:center}.donut strong{display:block;font-size:18px}.donut small{font-size:10px;color:#b7c7d3}
+.timer-info{min-width:0}.timer-info strong{font-size:13px}.timer-info p{font-size:12px;color:#b7c7d3;margin:5px 0 0}
+.section{margin-top:20px;background:#fff;border:1px solid var(--line);border-radius:15px;padding:18px}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:13px}
+.section h2{font-size:18px;margin:0}.muted{color:var(--muted);font-size:12px}
+.report-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.report{border:1px solid var(--line);border-radius:11px;padding:12px;background:#f8fafc}
+.report h3{font-size:13px;margin:0 0 9px}.report-row{display:flex;justify-content:space-between;font-size:12px;margin:5px 0;color:#566777}.report-row b{color:#182b3b;font-variant-numeric:tabular-nums}
+.report-total{margin-top:9px;padding-top:8px;border-top:1px solid var(--line);font-size:12px;display:flex;justify-content:space-between;font-weight:800}
+.log-tools{display:flex;gap:8px;flex-wrap:wrap}.log-list{display:flex;flex-direction:column;gap:7px}
+.log-item{display:grid;grid-template-columns:155px 1fr auto;gap:10px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fbfcfd}
+.log-time{font-size:12px;color:#5c6c79;font-variant-numeric:tabular-nums}.log-message{font-weight:750;font-size:13px}.tag{display:inline-block;font-size:10px;padding:3px 7px;border-radius:20px;margin-left:6px;background:#e9eef3;color:#536474}
+.tag.on{background:#fde7e7;color:#a52c2c}.tag.off{background:#e1f5eb;color:#176541}
+.log-actions{display:flex;gap:5px}.log-actions button{padding:6px 9px;font-size:11px}
+.empty{padding:25px;text-align:center;color:#7a8995;font-size:13px}
+.modal-backdrop{display:none;position:fixed;inset:0;background:#0c1a26a8;z-index:5;align-items:center;justify-content:center;padding:16px}.modal-backdrop.show{display:flex}
+.modal{width:min(440px,100%);background:white;border-radius:15px;padding:20px;box-shadow:0 20px 60px #0003}.modal h3{margin:0 0 14px}
+.field{display:grid;gap:5px;margin:11px 0}.field label{font-size:12px;font-weight:750;color:#425464}.field input,.field select{width:100%;padding:11px;border:1px solid #cbd5df;border-radius:8px;font:inherit;background:white;color:#17212b}
+.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
+.note{font-size:11px;color:#6d7d89;margin-top:12px}
+@media(max-width:850px){.grid{grid-template-columns:1fr 1fr}.report-grid{grid-template-columns:1fr}}
+@media(max-width:560px){main{padding:0 11px 30px}.grid{grid-template-columns:1fr}.card{padding:15px}.section{padding:14px}.log-item{grid-template-columns:1fr auto;gap:5px}.log-time{grid-column:1/-1}.log-message{grid-column:1}.log-actions{grid-column:2;grid-row:2}.timer-card{gap:13px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">BEDC Electricity Plc · Operations</div>
+  <h1>Injection Substation Logbook</h1>
+  <p>33kV / 11kV feeder control, supply tracking and availability records</p>
+</header>
+<main>
+  <div class="topbar">
+    <div><div class="session" id="sessionInfo">Monitoring session</div><div class="muted" id="clock"></div><button class="btn-light" id="editSessionBtn" style="margin-top:7px;padding:7px 10px">Edit session start time</button></div>
+    <div class="actions">
+      <button class="btn-light" id="manualBtn">＋ Add manual record</button>
+      <button class="btn-danger" id="resetBtn">Reset session</button>
+    </div>
+  </div>
+
+  <div class="grid" id="feederCards"></div>
+
+  <section class="section">
+    <div class="section-head">
+      <div><h2>Supply availability</h2><div class="muted">Cumulative ON and OFF durations from the current session start to now.</div></div>
+      <div class="actions"><button class="btn-primary" id="calcBtn">Calculate availability</button><button class="btn-light" id="clearCalcBtn">Clear calculations</button></div>
+    </div>
+    <div id="reports"><div class="empty">Press “Calculate availability” to generate the report.</div></div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <div><h2>Chronological operations log</h2><div class="muted">All events are stored on this device. Edit a timestamp to recalculate durations and reorder the log.</div></div>
+      <div class="log-tools"><button class="btn-light" id="manualBtn2">＋ Add record</button></div>
+    </div>
+    <div class="log-list" id="logList"></div>
+  </section>
+  <p class="note">Times use your device's local time. Set your device to Nigeria time (WAT, UTC+1) for BEDC operating records. Data is saved in this browser on this device. Clearing browser site data or changing devices can remove locally stored records.</p>
+</main>
+
+<div class="modal-backdrop" id="modal">
+ <div class="modal">
+  <h3 id="modalTitle">Add manual record</h3>
+  <div class="field"><label for="mFeeder">Feeder</label><select id="mFeeder"><option value="33">Abraka 33kV feeder</option><option value="11a">Orhoerha/Emonu feeder</option><option value="11b">Fed. Polytechnic feeder</option></select></div>
+  <div class="field"><label for="mAction">Event</label><select id="mAction"><option value="ON">ON</option><option value="OFF">OFF</option></select></div>
+  <div class="field"><label for="mTime">Date and time (24-hour)</label><input id="mTime" type="datetime-local" step="60"></div>
+  <div class="note" id="modalNote">Manual events are inserted into the timeline and affect subsequent states, timers and calculations.</div>
+  <div class="modal-actions"><button class="btn-light" id="cancelModal">Cancel</button><button class="btn-primary" id="saveManual">Save record</button></div>
+ </div>
+</div>
+
+<div class="modal-backdrop" id="sessionModal">
+ <div class="modal">
+  <h3>Change session start time</h3>
+  <div class="field"><label for="sessionStartInput">Session start date and time (24-hour)</label><input id="sessionStartInput" type="datetime-local" step="60"></div>
+  <div class="note">Changing the session start time updates feeder ON/OFF availability and supply countdown calculations. Existing log entries remain unchanged.</div>
+  <div class="modal-actions"><button class="btn-light" id="cancelSessionModal">Cancel</button><button class="btn-primary" id="saveSessionStart">Save start time</button></div>
+ </div>
+</div>
+<script>
+(() => {
+'use strict';
+const KEY='bedc_injection_logbook_v1';
+const FEEDERS=[
+ {id:'33',name:'Abraka 33kV feeder',budget:null},
+ {id:'11a',name:'Orhoerha/Emonu feeder',budget:5*3600000},
+ {id:'11b',name:'Fed. Polytechnic feeder',budget:16*3600000}
+];
+let data, reportVisible=false, editingId=null;
+const $=id=>document.getElementById(id);
+const now=()=>Date.now();
+const uid=()=>Math.random().toString(36).slice(2,10)+Date.now().toString(36);
+function fresh(){return {start:now(),events:[],created:now()};}
+let storageAvailable=true;
+function save(){
+  try{localStorage.setItem(KEY,JSON.stringify(data));storageAvailable=true;}
+  catch(e){storageAvailable=false;}
+}
+function load(){
+  try{const x=JSON.parse(localStorage.getItem(KEY));if(x&&Number.isFinite(x.start)&&Array.isArray(x.events))return x;}
+  catch(e){storageAvailable=false;}
+  return fresh();
+}
+function fmtDuration(ms){ms=Math.max(0,Math.floor(ms/60000)*60000);const h=Math.floor(ms/3600000),m=Math.floor(ms%3600000/60000);return `${h}hrs ${m}mins`;}
+function dateTime(ts){const d=new Date(ts);return d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})+' '+d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',hour12:false});}
+function inputDate(ts){const d=new Date(ts);const pad=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;}
+function sorted(){return [...data.events].sort((a,b)=>a.time-b.time||a.order-b.order);}
+function replay(until=now()){
+ const states={'33':false,'11a':false,'11b':false}, used={'11a':0,'11b':0}, onSince={'33':null,'11a':null,'11b':null};
+ let cursor=data.start;
+ const totals={}; for(const f of FEEDERS)totals[f.id]={on:0,off:0};
+ const events=sorted().filter(e=>e.time<=until);
+ function addInterval(id,to){if(to<cursor)return;const start=onSince[id]===null?cursor:onSince[id];}
+ // Process each event, tracking feeder-specific state intervals.
+ const last={'33':data.start,'11a':data.start,'11b':data.start};
+ function accrue(id,t){const duration=Math.max(0,t-last[id]);totals[id][states[id]?'on':'off']+=duration;if(states[id]&&id!=='33')used[id]+=duration;last[id]=t;}
+ for(const e of events){
+   const t=Math.max(data.start,e.time);
+   accrue(e.feeder,t);
+   states[e.feeder]=e.action==='ON';
+ }
+ for(const f of FEEDERS)accrue(f.id,until);
+ return {states,used,totals,last};
+}
+function addEvent(feeder,action,time,source='manual'){
+ data.events.push({id:uid(),feeder,action,time,source,order:now()+Math.random()});
+ data.events.sort((a,b)=>a.time-b.time||a.order-b.order);
+}
+function normalizeTimeline(){
+ // Rebuild generated events from the operator-entered/control events so edits never
+ // leave obsolete automatic trip or exhaustion records behind.
+ data.events=data.events.filter(e=>e.source!=='automatic-exhaustion'&&e.source!=='automatic-33kv-trip');
+ // First derive 11kV trips caused by each 33kV OFF event.
+ let s33=false,s11a=false,s11b=false;
+ const base=sorted();
+ for(const e of base){
+   if(e.feeder==='33'){
+     s33=e.action==='ON';
+     if(!s33){
+       if(s11a){addEvent('11a','OFF',e.time,'automatic-33kv-trip');s11a=false;}
+       if(s11b){addEvent('11b','OFF',e.time,'automatic-33kv-trip');s11b=false;}
+     }
+   } else if(e.feeder==='11a')s11a=e.action==='ON';
+   else if(e.feeder==='11b')s11b=e.action==='ON';
+ }
+ // Then calculate the exact point at which each 11kV supply allowance is used up.
+ for(const id of ['11a','11b']){
+   const budget=FEEDERS.find(f=>f.id===id).budget;
+   let state=false,used=0,last=data.start,exhaustedAt=null;
+   for(const e of sorted().filter(x=>x.feeder===id)){
+     const t=Math.max(data.start,e.time);
+     if(state){
+       const interval=Math.max(0,t-last),remaining=budget-used;
+       if(interval>=remaining){exhaustedAt=last+remaining;break;}
+       used+=interval;
+     }
+     state=e.action==='ON';last=t;
+   }
+   if(exhaustedAt===null&&state){
+     const remaining=budget-used;
+     if(remaining<=0)exhaustedAt=last;
+     else if(last+remaining<=now())exhaustedAt=last+remaining;
+   }
+   if(exhaustedAt!==null)addEvent(id,'OFF',exhaustedAt,'automatic-exhaustion');
+ }
+ data.events.sort((a,b)=>a.time-b.time||a.order-b.order);
+}
+function currentState(){return replay(now());}
+function exhausted(id){const r=replay(now());return r.used[id]>=FEEDERS.find(f=>f.id===id).budget;}
+function remaining(id){const f=FEEDERS.find(x=>x.id===id);return Math.max(0,f.budget-replay(now()).used[id]);}
+function switchFeeder(id,action){
+ const r=currentState();
+ if(action==='ON'){
+   if(r.states[id])return;
+   if(id!=='33'&&!r.states['33']){alert('The Abraka 33kV feeder must be ON before an 11kV feeder can be switched ON.');return;}
+   if(id!=='33'&&exhausted(id)){alert('The supply-hour allowance for this feeder has been exhausted. Reset the session to start a new allowance.');return;}
+   addEvent(id,'ON',now(),'control');
+ }else{
+   if(!r.states[id])return;
+   addEvent(id,'OFF',now(),'control');
+   if(id==='33'){
+     const after=currentState();
+     if(after.states['11a'])addEvent('11a','OFF',now(),'automatic-33kv-trip');
+     if(after.states['11b'])addEvent('11b','OFF',now(),'automatic-33kv-trip');
+   }
+ }
+ normalizeTimeline();save();render();
+}
+function feederCard(f,r){
+ const on=r.states[f.id],used=r.used[f.id]||0,rem=f.budget===null?null:Math.max(0,f.budget-used);
+ const progress=f.budget===null?100:Math.max(0,Math.min(100,rem/f.budget*100));
+ const timer=f.budget===null?'No time limit':fmtDuration(rem);
+ const lock=f.budget!==null&&rem<=0;
+ return `<article class="card">
+ <h2>${f.name}</h2><div class="sub">${f.id==='33'?'33kV incomer':'11kV outgoing feeder'}</div>
+ <div class="status"><span class="lamp ${on?'on':''}"></span><b>${on?'ON · Supply available':'OFF · No supply'}</b>${lock?'<span class="tag off">Allowance exhausted</span>':''}</div>
+ <div class="control"><button class="btn-on" data-switch="${f.id}:ON" ${on||lock||(f.id!=='33'&&!r.states['33'])?'disabled':''}>ON</button><button class="btn-off" data-switch="${f.id}:OFF" ${!on?'disabled':''}>OFF</button></div>
+ ${f.budget===null?`<div class="metrics"><div class="metric"><small>Session ON time</small><strong>${fmtDuration(r.totals[f.id].on)}</strong></div><div class="metric"><small>Session OFF time</small><strong>${fmtDuration(r.totals[f.id].off)}</strong></div></div>`:
+ `<div class="timer-card"><div class="donut" style="--progress:${progress}%"><div><strong>${fmtDuration(rem).replace('hrs ','h ').replace('mins','m')}</strong><small>REMAINING</small></div></div><div class="timer-info"><strong>${f.budget/3600000} hour supply allowance</strong><p>${lock?'Allowance exhausted. Reset required.':on?'Countdown running while feeder is ON.':'Countdown paused while feeder is OFF.'}</p><p>Used: ${fmtDuration(used)}</p></div></div>`}
+ </article>`;
+}
+function render(){
+ const r=currentState();
+ $('feederCards').innerHTML=FEEDERS.map(f=>feederCard(f,r)).join('');
+ document.querySelectorAll('[data-switch]').forEach(b=>b.addEventListener('click',()=>{const [id,a]=b.dataset.switch.split(':');switchFeeder(id,a);}));
+ $('sessionInfo').textContent='Session started: '+dateTime(data.start)+(storageAvailable?'':' · Storage unavailable in this browser view');
+ $('clock').textContent='Current time: '+new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false})+' (24-hour)';
+ const list=sorted();
+ $('logList').innerHTML=list.length?list.map(e=>{
+   const f=FEEDERS.find(x=>x.id===e.feeder),label=e.action==='ON'?'on':'off';
+   const source=e.source==='automatic-exhaustion'?'Supply allowance exhausted':e.source==='automatic-33kv-trip'?'Automatic 33kV trip':e.source==='manual'?'Manual entry':'Control panel';
+   return `<div class="log-item"><div class="log-time">${dateTime(e.time)}</div><div class="log-message">${dateTime(e.time).split(' ').slice(-1)[0]} ${f.name} ${label}<span class="tag ${label}">${source}</span></div><div class="log-actions"><button class="btn-light" data-edit="${e.id}">Edit</button><button class="btn-light" data-delete="${e.id}">Delete</button></div></div>`;
+ }).join(''):'<div class="empty">No feeder events recorded yet. Switch a feeder ON or OFF to begin the log.</div>';
+ document.querySelectorAll('[data-edit]').forEach(b=>b.addEventListener('click',()=>openModal(b.dataset.edit)));
+ document.querySelectorAll('[data-delete]').forEach(b=>b.addEventListener('click',()=>deleteEvent(b.dataset.delete)));
+ if(reportVisible)renderReport();
+}
+function renderReport(){
+ const r=currentState();
+ $('reports').innerHTML='<div class="report-grid">'+FEEDERS.map(f=>`<div class="report"><h3>${f.name}</h3><div class="report-row"><span>Total ON time</span><b>${fmtDuration(r.totals[f.id].on)}</b></div><div class="report-row"><span>Total OFF time</span><b>${fmtDuration(r.totals[f.id].off)}</b></div><div class="report-total"><span>Monitored time</span><span>${fmtDuration(r.totals[f.id].on+r.totals[f.id].off)}</span></div></div>`).join('')+'</div>';
+}
+function openModal(id=null){
+ editingId=id;
+ $('modalTitle').textContent=id?'Edit log record':'Add manual record';
+ $('modalNote').textContent=id?'Change the event timestamp, feeder or action. The event will be repositioned chronologically and calculations will be updated.':'Manual events are inserted into the timeline and affect subsequent states, timers and calculations.';
+ if(id){const e=data.events.find(x=>x.id===id);$('mFeeder').value=e.feeder;$('mAction').value=e.action;$('mTime').value=inputDate(e.time);}
+ else{$('mFeeder').value='33';$('mAction').value='ON';$('mTime').value=inputDate(now());}
+ $('modal').classList.add('show');
+}
+function closeModal(){$('modal').classList.remove('show');editingId=null;}
+function saveManual(){
+ const feeder=$('mFeeder').value,action=$('mAction').value,time=new Date($('mTime').value).getTime();
+ if(!Number.isFinite(time)||!$('mTime').value){alert('Enter a valid date and time.');return;}
+ if(time<data.start){alert('The event cannot be earlier than the current session start.');return;}
+ if(time>now()+60000){alert('Future event times are not allowed.');return;}
+ if(editingId){const e=data.events.find(x=>x.id===editingId);if(e){e.feeder=feeder;e.action=action;e.time=time;e.source='manual';}}
+ else addEvent(feeder,action,time,'manual');
+ normalizeTimeline();save();closeModal();reportVisible=false;$('reports').innerHTML='<div class="empty">Press “Calculate availability” to generate the report.</div>';render();
+}
+function deleteEvent(id){if(!confirm('Delete this log record? Related feeder states and calculations will be recalculated.'))return;data.events=data.events.filter(e=>e.id!==id);normalizeTimeline();save();reportVisible=false;$('reports').innerHTML='<div class="empty">Press “Calculate availability” to generate the report.</div>';render();}
+
+$('editSessionBtn').onclick=()=>{
+  $('sessionStartInput').value=inputDate(data.start);
+  $('sessionModal').classList.add('show');
+};
+$('cancelSessionModal').onclick=()=>$('sessionModal').classList.remove('show');
+$('sessionModal').addEventListener('click',e=>{if(e.target===$('sessionModal'))$('sessionModal').classList.remove('show');});
+$('saveSessionStart').onclick=()=>{
+  const value=$('sessionStartInput').value;
+  const nextStart=new Date(value).getTime();
+  if(!value||!Number.isFinite(nextStart)){alert('Enter a valid session start date and time.');return;}
+  if(nextStart>now()){alert('Session start time cannot be in the future.');return;}
+  const firstEvent=sorted()[0];
+  if(firstEvent&&nextStart>firstEvent.time){alert('Session start time cannot be later than the earliest recorded feeder event.');return;}
+  data.start=nextStart;
+  normalizeTimeline();
+  save();
+  $('sessionModal').classList.remove('show');
+  render();
+};
+
+$('manualBtn').onclick=()=>openModal();$('manualBtn2').onclick=()=>openModal();
+$('cancelModal').onclick=closeModal;$('saveManual').onclick=saveManual;
+$('modal').addEventListener('click',e=>{if(e.target===$('modal'))closeModal();});
+$('calcBtn').onclick=()=>{reportVisible=true;renderReport();};
+$('clearCalcBtn').onclick=()=>{reportVisible=false;$('reports').innerHTML='<div class="empty">Press “Calculate availability” to generate the report.</div>';};
+$('resetBtn').onclick=()=>{
+ if(!confirm('Reset the entire monitoring session? This permanently clears all feeder logs, availability calculations and countdown usage on this device.'))return;
+ data=fresh();reportVisible=false;save();$('reports').innerHTML='<div class="empty">Press “Calculate availability” to generate the report.</div>';render();
+};
+window.addEventListener('error',e=>{
+  const msg=document.createElement('div');
+  msg.style.cssText='margin:12px 0;padding:12px;background:#fee2e2;color:#991b1b;border-radius:9px;font-size:13px';
+  msg.textContent='App error: '+(e.message||'An unexpected error occurred')+'. Reload the file in Chrome. ';
+  document.querySelector('main').prepend(msg);
+});
+try{
+  data=load();normalizeTimeline();save();render();
+  setInterval(()=>{try{normalizeTimeline();save();render();}catch(e){console.error(e);}},1000);
+}catch(e){
+  const msg=document.createElement('div');
+  msg.style.cssText='margin:12px 0;padding:12px;background:#fee2e2;color:#991b1b;border-radius:9px';
+  msg.textContent='The app could not start: '+e.message;
+  document.querySelector('main').prepend(msg);
+}
+})();
+</script>
+<script>
+if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./service-worker.js')
+      .catch(err => console.error('Service worker registration failed:', err));
+  });
+}
+</script>
+</body>
+</html>
