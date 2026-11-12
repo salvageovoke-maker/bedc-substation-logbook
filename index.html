@@ -326,73 +326,9 @@ button:disabled{opacity:.4;cursor:not-allowed}.btn-light{background:#fff;color:#
 @media(max-width:600px){.alerts-summary{grid-template-columns:1fr 1fr}.alert-settings{grid-template-columns:1fr}}
 
 
-.pin-gate{position:fixed;inset:0;z-index:99999;background:rgba(13,27,39,.96);display:flex;align-items:center;justify-content:center;padding:18px;overflow-y:auto}
-.pin-gate[hidden]{display:none!important}
-.pin-panel{width:min(100%,430px);background:#fff;border-radius:18px;padding:25px;box-shadow:0 18px 60px #0005}
-.pin-brand{font-size:11px;letter-spacing:.13em;font-weight:800;color:#587082;margin-bottom:8px}
-.pin-panel h2{margin:0 0 7px;font-size:23px;color:#172b3a}
-.pin-panel p{color:#637383;margin:0 0 17px}
-.pin-panel label{display:block;font-size:13px;font-weight:700;color:#405365;margin:13px 0 6px}
-.pin-panel input{width:100%;padding:13px 14px;border:1px solid #cbd5df;border-radius:9px;font-size:20px;letter-spacing:.2em;background:#fff;color:#17212b}
-.pin-panel button{width:100%;margin-top:12px;min-height:44px}
-.pin-status{min-height:22px;margin-top:12px;font-size:13px;color:#a12b2b}
-.pin-recovery-code{margin-top:16px;padding:14px;background:#f2f6f8;border-radius:10px}
-.pin-recovery-code code{display:block;padding:12px;margin:9px 0;background:#fff;border:1px dashed #8295a5;border-radius:8px;text-align:center;font-size:20px;letter-spacing:.12em;font-weight:800;color:#173b5e;user-select:all}
-@media(max-width:600px){.pin-panel{padding:20px}.topbar .actions{flex-wrap:wrap}}
-
 </style>
-<link rel="manifest" href="./manifest.webmanifest">
-<link rel="icon" href="./icon-192.png" sizes="192x192">
 </head>
 <body>
-
-<div id="pinGate" class="pin-gate" aria-modal="true" role="dialog" aria-labelledby="pinGateTitle">
-  <div class="pin-panel">
-    <div class="pin-brand">BEDC · SUBSTATION LOGBOOK</div>
-    <h2 id="pinGateTitle">Set your app PIN</h2>
-    <p id="pinGateMessage">Create one shared PIN to protect access to this logbook on this device.</p>
-    <div id="pinSetupFields">
-      <label for="pinNew">New PIN (4 to 6 digits)</label>
-      <input id="pinNew" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="new-password" placeholder="Enter PIN">
-      <label for="pinConfirm">Confirm PIN</label>
-      <input id="pinConfirm" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="new-password" placeholder="Re-enter PIN">
-      <button id="pinCreateBtn" class="btn-primary" type="button">Create PIN</button>
-    </div>
-    <div id="pinUnlockFields" hidden>
-      <label for="pinEntry">Enter your PIN</label>
-      <input id="pinEntry" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="current-password" placeholder="Enter 4 to 6 digit PIN">
-      <button id="pinUnlockBtn" class="btn-primary" type="button">Unlock logbook</button>
-      <button id="pinForgotBtn" class="btn-light" type="button">Forgot PIN?</button>
-    </div>
-    <div id="pinRecoveryFields" hidden>
-      <label for="pinRecoveryEntry">Recovery code</label>
-      <input id="pinRecoveryEntry" type="text" maxlength="16" autocomplete="off" placeholder="Enter recovery code">
-      <label for="pinRecoveryNew">New PIN (4 to 6 digits)</label>
-      <input id="pinRecoveryNew" type="password" inputmode="numeric" maxlength="6" autocomplete="new-password" placeholder="New PIN">
-      <label for="pinRecoveryConfirm">Confirm new PIN</label>
-      <input id="pinRecoveryConfirm" type="password" inputmode="numeric" maxlength="6" autocomplete="new-password" placeholder="Confirm new PIN">
-      <button id="pinRecoverBtn" class="btn-primary" type="button">Reset PIN</button>
-      <button id="pinBackBtn" class="btn-light" type="button">Back to PIN entry</button>
-    </div>
-    <div id="pinRecoveryCodeBox" class="pin-recovery-code" hidden>
-      <strong>Save this recovery code</strong>
-      <p>This code is shown only now. Keep it somewhere safe. You will need it if you forget your PIN.</p>
-      <code id="pinRecoveryCode"></code>
-      <button id="pinRecoverySavedBtn" class="btn-primary" type="button">I've saved the recovery code</button>
-    </div>
-    <div id="pinChangeFields" hidden>
-      <label for="pinCurrent">Current PIN</label>
-      <input id="pinCurrent" type="password" inputmode="numeric" maxlength="6" autocomplete="current-password">
-      <label for="pinChangeNew">New PIN (4 to 6 digits)</label>
-      <input id="pinChangeNew" type="password" inputmode="numeric" maxlength="6" autocomplete="new-password">
-      <label for="pinChangeConfirm">Confirm new PIN</label>
-      <input id="pinChangeConfirm" type="password" inputmode="numeric" maxlength="6" autocomplete="new-password">
-      <button id="pinChangeSaveBtn" class="btn-primary" type="button">Change PIN</button>
-      <button id="pinChangeCancelBtn" class="btn-light" type="button">Cancel</button>
-    </div>
-    <div id="pinStatus" class="pin-status" role="status" aria-live="polite"></div>
-  </div>
-</div>
 
 <header>
   <div class="eyebrow">BEDC Electricity Plc · Operations</div>
@@ -468,8 +404,6 @@ button:disabled{opacity:.4;cursor:not-allowed}.btn-light{background:#fff;color:#
       <button class="btn-primary" id="startNewDayBtn" type="button">Start New Day</button>
       <button class="btn-light" id="manualBtn">＋ Add manual record</button>
       <button class="btn-danger" id="resetBtn">Reset session</button>
-      <button class="btn-light" id="changePinBtn" type="button">Change PIN</button>
-      <button class="btn-dark" id="lockAppBtn" type="button">Lock App</button>
     </div>
   </div>
 
@@ -1247,7 +1181,8 @@ function printAvailabilityReport(kind){
  <section class="meta"><div><strong>Report type:</strong> ${reportTitle}</div><div><strong>Generated:</strong> ${safe(new Date().toLocaleString('en-GB'))}</div><div><strong>Prepared by:</strong> ${safe(prepared)}</div><div><strong>Checked by:</strong> ${safe(checked)}</div><div><strong>Reference:</strong> ${safe(reference)}</div><div><strong>Substation:</strong> ${safe(substation)}</div></section>
  <main>${body}</main><div class="signatures"><div class="sign">Prepared by / Signature / Date</div><div class="sign">Checked by / Signature / Date</div></div>
  <div class="footer">BEDC Substation Logbook · Operational report · Handle as confidential work data</div>
- <script>window.addEventListener('load',()=>{setTimeout(()=>window.print(),350)});<\/script></body></html>`;
+ <script>window.addEventListener('load',()=>{setTimeout(()=>window.print(),350)});<\/script>
+</body></html>`;
  const win=window.open('','_blank');
  if(!win){alert('The browser blocked the print window. Allow pop-ups for this app, then try again.');return;}
  win.document.open();win.document.write(doc);win.document.close();
@@ -1315,13 +1250,6 @@ function localDateKey(value=new Date()){
  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 }
 async function startNewOperationalDay(){
- if(!pinUnlocked)return pinShow('unlock','Enter your shared PIN before starting a new operational day.');
- const entered=prompt('Enter your shared PIN to authorise the new operational day:');
- if(entered===null)return;
- const savedSalt=localStorage.getItem(PIN_SALT_KEY)||'';
- if(!pinValid(entered)||await pinDigest(entered,savedSalt)!==localStorage.getItem(PIN_HASH_KEY)){
-  alert('Incorrect PIN. The current operational records have not been changed.');return;
- }
  const todayKey=localDateKey();
  if(data.lastRolloverDate===todayKey){
   alert('A new operational day has already been started today. No records were changed.');return;
@@ -2031,116 +1959,7 @@ $('phaseImbalanceThreshold').value=String(alertSettings.phaseImbalancePercent);
 
 
 
-// Single shared app PIN. Credentials are device-local and are intentionally excluded from backups.
-const PIN_HASH_KEY='bedc_logbook_pin_hash_v1';
-const PIN_SALT_KEY='bedc_logbook_pin_salt_v1';
-const PIN_RECOVERY_HASH_KEY='bedc_logbook_pin_recovery_hash_v1';
-const PIN_RECOVERY_SALT_KEY='bedc_logbook_pin_recovery_salt_v1';
-const PIN_IDLE_MS=5*60*1000;
-let pinUnlocked=false,pinIdleTimer=null,pinPendingRecoveryCode='';
-function pinRandomHex(bytes=16){
- const a=new Uint8Array(bytes);
- if(window.crypto&&crypto.getRandomValues)crypto.getRandomValues(a);
- else for(let i=0;i<a.length;i++)a[i]=Math.floor(Math.random()*256);
- return Array.from(a,x=>x.toString(16).padStart(2,'0')).join('');
-}
-async function pinDigest(value,salt){
- const input=String(salt)+'|'+String(value);
- if(window.crypto&&crypto.subtle){
-  const bytes=new TextEncoder().encode(input),hash=await crypto.subtle.digest('SHA-256',bytes);
-  return Array.from(new Uint8Array(hash),x=>x.toString(16).padStart(2,'0')).join('');
- }
- // Compatibility fallback for browsers without Web Crypto. This is a local access gate, not server-grade authentication.
- let h1=2166136261,h2=2246822519;
- for(let i=0;i<input.length;i++){h1=Math.imul(h1^input.charCodeAt(i),16777619);h2=Math.imul(h2^input.charCodeAt(i),3266489917);}
- return (h1>>>0).toString(16).padStart(8,'0')+(h2>>>0).toString(16).padStart(8,'0');
-}
-function pinValid(v){return /^[0-9]{4,6}$/.test(String(v||''));}
-function pinHasCredentials(){return !!(localStorage.getItem(PIN_HASH_KEY)&&localStorage.getItem(PIN_SALT_KEY));}
-function pinShow(mode,message=''){
- const gate=$('pinGate');
- $('pinSetupFields').hidden=mode!=='setup';
- $('pinUnlockFields').hidden=mode!=='unlock';
- $('pinRecoveryFields').hidden=mode!=='recovery';
- $('pinChangeFields').hidden=mode!=='change';
- $('pinRecoveryCodeBox').hidden=mode!=='recovery-code';
- $('pinGateTitle').textContent=mode==='setup'?'Set your app PIN':mode==='unlock'?'Logbook locked':mode==='recovery'?'Recover access':mode==='change'?'Change app PIN':'PIN recovery code';
- $('pinGateMessage').textContent=mode==='setup'?'Create one shared PIN to protect access to this logbook on this device.':mode==='unlock'?'Enter the shared PIN to continue.':mode==='recovery'?'Enter the recovery code you saved when you created the PIN.':mode==='change'?'Verify your current PIN and enter a new one.':'Keep this recovery code safe. It will not be shown again.';
- $('pinStatus').textContent=message;
- gate.hidden=false;
- const focusId=mode==='setup'?'pinNew':mode==='unlock'?'pinEntry':mode==='recovery'?'pinRecoveryEntry':mode==='change'?'pinCurrent':null;
- if(focusId)setTimeout(()=>$ (focusId)?.focus(),40);
-}
-function pinHide(){ $('pinGate').hidden=true; }
-function pinResetIdleTimer(){
- if(!pinUnlocked)return;
- clearTimeout(pinIdleTimer);
- pinIdleTimer=setTimeout(()=>pinLock('The app locked after 5 minutes of inactivity.'),PIN_IDLE_MS);
-}
-function pinLock(message='The logbook is locked. Enter your PIN to continue.'){
- pinUnlocked=false;clearTimeout(pinIdleTimer);
- pinShow('unlock',message);
-}
-async function pinCreate(){
- const a=$('pinNew').value,b=$('pinConfirm').value;
- if(!pinValid(a))return $('pinStatus').textContent='Enter a PIN containing 4 to 6 digits.';
- if(a!==b)return $('pinStatus').textContent='The PIN entries do not match.';
- const salt=pinRandomHex(),recovery=pinRandomHex(6).toUpperCase();
- localStorage.setItem(PIN_HASH_KEY,await pinDigest(a,salt));
- localStorage.setItem(PIN_SALT_KEY,salt);
- const recoverySalt=pinRandomHex();
- localStorage.setItem(PIN_RECOVERY_HASH_KEY,await pinDigest(recovery,recoverySalt));
- localStorage.setItem(PIN_RECOVERY_SALT_KEY,recoverySalt);
- pinPendingRecoveryCode=recovery;
- $('pinRecoveryCode').textContent=recovery.match(/.{1,4}/g).join('-');
- pinShow('recovery-code');
-}
-async function pinUnlock(){
- const entered=$('pinEntry').value,salt=localStorage.getItem(PIN_SALT_KEY)||'';
- if(!pinValid(entered))return $('pinStatus').textContent='Enter your 4 to 6 digit PIN.';
- const hash=await pinDigest(entered,salt);
- if(hash!==localStorage.getItem(PIN_HASH_KEY))return $('pinStatus').textContent='Incorrect PIN. Try again.';
- pinUnlocked=true;$('pinEntry').value='';pinHide();pinResetIdleTimer();
-}
-async function pinRecover(){
- const code=$('pinRecoveryEntry').value.replace(/-/g,'').trim().toUpperCase();
- const a=$('pinRecoveryNew').value,b=$('pinRecoveryConfirm').value;
- if(!code)return $('pinStatus').textContent='Enter your recovery code.';
- if(!pinValid(a))return $('pinStatus').textContent='New PIN must contain 4 to 6 digits.';
- if(a!==b)return $('pinStatus').textContent='The new PIN entries do not match.';
- const expected=await pinDigest(code,localStorage.getItem(PIN_RECOVERY_SALT_KEY)||'');
- if(expected!==localStorage.getItem(PIN_RECOVERY_HASH_KEY))return $('pinStatus').textContent='Recovery code is incorrect.';
- const salt=pinRandomHex();
- localStorage.setItem(PIN_HASH_KEY,await pinDigest(a,salt));localStorage.setItem(PIN_SALT_KEY,salt);
- $('pinRecoveryEntry').value='';$('pinRecoveryNew').value='';$('pinRecoveryConfirm').value='';
- pinUnlocked=true;pinHide();pinResetIdleTimer();
-}
-async function pinChange(){
- const current=$('pinCurrent').value,a=$('pinChangeNew').value,b=$('pinChangeConfirm').value;
- if(await pinDigest(current,localStorage.getItem(PIN_SALT_KEY)||'')!==localStorage.getItem(PIN_HASH_KEY))return $('pinStatus').textContent='Current PIN is incorrect.';
- if(!pinValid(a))return $('pinStatus').textContent='New PIN must contain 4 to 6 digits.';
- if(a!==b)return $('pinStatus').textContent='The new PIN entries do not match.';
- const salt=pinRandomHex();localStorage.setItem(PIN_HASH_KEY,await pinDigest(a,salt));localStorage.setItem(PIN_SALT_KEY,salt);
- $('pinCurrent').value='';$('pinChangeNew').value='';$('pinChangeConfirm').value='';
- pinShow('unlock','PIN changed successfully. Enter your new PIN to continue.');
- pinUnlocked=false;clearTimeout(pinIdleTimer);
-}
-$('pinCreateBtn').addEventListener('click',pinCreate);
-$('pinUnlockBtn').addEventListener('click',pinUnlock);
-$('pinForgotBtn').addEventListener('click',()=>pinShow('recovery'));
-$('pinRecoverBtn').addEventListener('click',pinRecover);
-$('pinBackBtn').addEventListener('click',()=>pinShow('unlock'));
-$('pinRecoverySavedBtn').addEventListener('click',()=>{pinPendingRecoveryCode='';pinUnlocked=true;pinHide();pinResetIdleTimer();});
-$('pinChangeSaveBtn').addEventListener('click',pinChange);
-$('pinChangeCancelBtn').addEventListener('click',()=>{pinHide();pinResetIdleTimer();});
-$('lockAppBtn').addEventListener('click',()=>pinLock('The logbook has been locked.'));
-$('changePinBtn').addEventListener('click',()=>{if(pinUnlocked)pinShow('change');});
-['click','keydown','touchstart','input','scroll'].forEach(type=>document.addEventListener(type,()=>pinResetIdleTimer(),{passive:true}));
-['pinNew','pinConfirm','pinEntry','pinRecoveryEntry','pinRecoveryNew','pinRecoveryConfirm','pinCurrent','pinChangeNew','pinChangeConfirm'].forEach(id=>{
- const el=$(id);el.addEventListener('keydown',e=>{if(e.key==='Enter'){const map={pinNew:'pinConfirm',pinConfirm:'pinCreateBtn',pinEntry:'pinUnlockBtn',pinRecoveryEntry:'pinRecoveryNew',pinRecoveryNew:'pinRecoveryConfirm',pinRecoveryConfirm:'pinRecoverBtn',pinCurrent:'pinChangeNew',pinChangeNew:'pinChangeConfirm',pinChangeConfirm:'pinChangeSaveBtn'};const target=$(map[id]);if(target)target.click();}});
-});
-if(pinHasCredentials())pinLock('Enter your shared PIN to open the logbook.');
-else pinShow('setup');
+// PIN protection removed. The logbook opens directly.
 
 try{
   data=load();normalizeTimeline();save();render();
@@ -2156,6 +1975,11 @@ render();}catch(e){console.error(e);}},1000);
 }
 })();
 </script>
-<script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js").catch(console.warn));}</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js').catch(err => console.error('Service worker registration failed:', err)));
+}
+</script>
 </body>
 </html>

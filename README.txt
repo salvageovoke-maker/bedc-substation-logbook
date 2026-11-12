@@ -1,3 +1,1 @@
-BEDC Substation Logbook v21.1 PWA
-The index.html is based on the user-provided Trend Based Estimates Test file, with only PWA manifest, icon and service worker registration tags added. Existing app logic was not altered.
-Upload all files to the root of your GitHub Pages repository. Do not clear browser site data.
+BEDC SUBSTATION LOGBOOK v21.1 (PIN REMOVED)\n\nThe app opens directly without PIN setup, unlock, recovery, PIN change, inactivity lock or manual lock. Starting a new operational day no longer requests a PIN.\n\nUpload all package files to the root of your GitHub Pages repository. Operational records remain in this browser's local storage. Do not clear site data if you need to retain records.\n
