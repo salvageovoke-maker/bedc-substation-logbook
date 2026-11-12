@@ -2,7 +2,7 @@
   "id": "./",
   "name": "BEDC Substation Logbook",
   "short_name": "BEDC Logbook",
-  "description": "Substation feeder operations, load readings, consumption and reports.",
+  "description": "BEDC Orogun Injection Substation operations, feeder monitoring, load readings, reports and equipment records.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
