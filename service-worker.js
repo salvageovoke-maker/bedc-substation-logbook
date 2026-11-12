@@ -1,4 +1,4 @@
-const CACHE_NAME = "bedc-substation-logbook-v21-1-final";
+const CACHE_NAME = "bedc-substation-logbook-v21-1-user-index";
 const APP_SHELL = [
   "./",
   "./index.html",

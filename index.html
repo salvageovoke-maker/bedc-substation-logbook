@@ -341,12 +341,8 @@ button:disabled{opacity:.4;cursor:not-allowed}.btn-light{background:#fff;color:#
 @media(max-width:600px){.pin-panel{padding:20px}.topbar .actions{flex-wrap:wrap}}
 
 </style>
-  <meta name="theme-color" content="#064f4c">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="manifest" href="./manifest.webmanifest">
-  <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
-  <link rel="apple-touch-icon" href="./icon-192.png">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icon-192.png" sizes="192x192">
 </head>
 <body>
 
@@ -1251,16 +1247,7 @@ function printAvailabilityReport(kind){
  <section class="meta"><div><strong>Report type:</strong> ${reportTitle}</div><div><strong>Generated:</strong> ${safe(new Date().toLocaleString('en-GB'))}</div><div><strong>Prepared by:</strong> ${safe(prepared)}</div><div><strong>Checked by:</strong> ${safe(checked)}</div><div><strong>Reference:</strong> ${safe(reference)}</div><div><strong>Substation:</strong> ${safe(substation)}</div></section>
  <main>${body}</main><div class="signatures"><div class="sign">Prepared by / Signature / Date</div><div class="sign">Checked by / Signature / Date</div></div>
  <div class="footer">BEDC Substation Logbook · Operational report · Handle as confidential work data</div>
- <script>window.addEventListener('load',()=>{setTimeout(()=>window.print(),350)});<\/script><script>
-if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./service-worker.js").catch(error => {
-      console.warn("Service worker registration failed:", error);
-    });
-  });
-}
-</script>
-</body></html>`;
+ <script>window.addEventListener('load',()=>{setTimeout(()=>window.print(),350)});<\/script></body></html>`;
  const win=window.open('','_blank');
  if(!win){alert('The browser blocked the print window. Allow pop-ups for this app, then try again.');return;}
  win.document.open();win.document.write(doc);win.document.close();
@@ -2169,5 +2156,6 @@ render();}catch(e){console.error(e);}},1000);
 }
 })();
 </script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js").catch(console.warn));}</script>
 </body>
 </html>
